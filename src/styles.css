@@ -116,3 +116,13 @@
 }
 
 @utility text-legible { text-shadow: 0 2px 24px oklch(0.1 0.02 165 / 0.6), 0 1px 3px oklch(0.1 0.02 165 / 0.5); }
+
+@utility scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@utility scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

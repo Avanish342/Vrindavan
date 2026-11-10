@@ -1,24 +1,23 @@
-// Real photographs of the venue, served from the CDN via .asset.json pointers.
-import facadeDusk from "@/assets/facade_dusk.jpg.asset.json";
-import hallWide from "@/assets/hall_interior_wide.jpg.asset.json";
-import hallGuests from "@/assets/hall_interior_guests.jpg.asset.json";
-import lawnNightStage from "@/assets/lawn_night_stage.jpg.asset.json";
-import lawnDiningNight from "@/assets/lawn_dining_night.jpg.asset.json";
-import floralEntranceNight from "@/assets/floral_entrance_night.jpg.asset.json";
-import stageLotus from "@/assets/stage_lotus.jpg.asset.json";
-import roomInterior from "@/assets/room_interior.jpg.asset.json";
-import menuCard from "@/assets/catering_menu_card.jpg.asset.json";
+import facadeDusk from "@/assets/facade_dusk.jpg";
+import hallWide from "@/assets/hall_interior_wide.jpg";
+import hallGuests from "@/assets/hall_interior_guests.jpg";
+import lawnNightStage from "@/assets/lawn_night_stage.jpg";
+import lawnDiningNight from "@/assets/lawn_dining_night.jpg";
+import floralEntranceNight from "@/assets/floral_entrance_night.jpg";
+import stageLotus from "@/assets/stage_lotus.jpg";
+import roomInterior from "@/assets/room_interior.jpg";
+import menuCard from "@/assets/catering_menu_card.jpg";
 
 export const REAL = {
-  facade: facadeDusk.url,
-  hallWide: hallWide.url,
-  hallGuests: hallGuests.url,
-  lawnNightStage: lawnNightStage.url,
-  lawnDiningNight: lawnDiningNight.url,
-  floralEntrance: floralEntranceNight.url,
-  stageLotus: stageLotus.url,
-  room: roomInterior.url,
-  menuCard: menuCard.url,
+  facade: facadeDusk,
+  hallWide,
+  hallGuests,
+  lawnNightStage,
+  lawnDiningNight,
+  floralEntrance: floralEntranceNight,
+  stageLotus,
+  room: roomInterior,
+  menuCard,
 } as const;
 
 export const REAL_ALT: Record<keyof typeof REAL, string> = {
