@@ -1,8 +1,8 @@
+import { NAV, SITE, whatsappLink } from "@/lib/site";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, MessageCircle, X, Camera, Globe, PlayCircle, MapPin, Phone, Mail } from "lucide-react";
+import { Camera, Globe, Mail, MapPin, Menu, MessageCircle, Phone, PlayCircle, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { NAV, SITE, whatsappLink } from "@/lib/site";
 import { PageCurtain, Splash } from "./Transitions";
 
 function Logo({ light }: { light: boolean }) {
@@ -91,7 +91,7 @@ export function Footer() {
   return (
     <footer className="bg-forest text-ivory">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-4">
-        <div className="sm:col-span-2">
+        <div>
           <p className="font-serif text-4xl">Vrindavan <span className="text-gold">Vatika</span></p>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-ivory/70">
             A banquet hall, wedding lawn and guest stay — crafted for celebrations that families remember for a lifetime.
@@ -106,11 +106,23 @@ export function Footer() {
         </div>
         <div>
           <p className="eyebrow mb-5 text-gold">Explore</p>
-          <ul className="space-y-2 text-sm text-ivory/75">
-            {NAV.map((n) => (
-              <li key={n.to}><Link to={n.to} className="hover:text-gold">{n.label}</Link></li>
+          <div className="flex flex-wrap gap-x-8 gap-y-6">
+            {[
+              { label: "Venue", links: ["/banquet-hall", "/lawn", "/rooms"] },
+              { label: "Celebrations", links: ["/weddings", "/decor", "/menu"] },
+              { label: "More", links: ["/", "/gallery", "/facilities", "/about", "/contact", "/plan-your-event"] },
+            ].map((category) => (
+              <div key={category.label} className="min-w-[7rem]">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-ivory/45">{category.label}</p>
+                <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-ivory/75">
+                  {category.links.map((to) => {
+                    const item = NAV.find((n) => n.to === to);
+                    return item ? <li key={item.to}><Link to={item.to} className="hover:text-gold">{item.label}</Link></li> : null;
+                  })}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
         <div>
           <p className="eyebrow mb-5 text-gold">Visit</p>
@@ -125,6 +137,22 @@ export function Footer() {
               </a>
             </li>
           </ul>
+        </div>
+        <div>
+          <p className="eyebrow mb-5 text-gold">Credits</p>
+          <p className="text-xs leading-relaxed text-ivory/50">
+            <span className="block">All service rights reserved by Vrindavan Vatika</span>
+            <span className="mt-2 block">
+              All management rights reserved by{" "}
+              <a href="https://www.loopax.online/" target="_blank" rel="noreferrer" className="text-ivory/75 underline underline-offset-4 hover:text-gold">
+                Loopax Org
+              </a>
+            </span>
+            <span className="mt-2 block">Made with love by</span>
+            <a href="https://www.mohammadramiz.in/" target="_blank" rel="noreferrer" className="mt-1 inline-block text-ivory/75 underline underline-offset-4 hover:text-gold">
+              Mohammad Ramiz
+            </a>
+          </p>
         </div>
       </div>
       <div className="border-t border-ivory/10 px-6 py-6 text-center text-xs text-ivory/50">
@@ -191,16 +219,43 @@ export function CTASection({ image, title = "Let's Make Your Celebration Extraor
 
 export function Shell({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const isLandingPage = path === "/";
   return (
     <>
       <Splash />
       <PageCurtain path={path} />
       <Navbar />
       <motion.main key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.4 }}>
-        {children}
+        {isLandingPage ? children : <ScrollAnimatedPage path={path}>{children}</ScrollAnimatedPage>}
       </motion.main>
       <Footer />
       <WhatsAppFloat />
     </>
   );
+}
+
+function ScrollAnimatedPage({ children, path }: { children: ReactNode; path: string }) {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > div > section"));
+    if (!sections.length) return;
+
+    sections.forEach((section) => section.classList.add("scroll-reveal"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("scroll-reveal-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [path]);
+
+  return <div>{children}</div>;
 }
