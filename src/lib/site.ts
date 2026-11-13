@@ -2,11 +2,11 @@
 export const SITE = {
   name: "Vrindavan Vatika",
   tagline: "Where Every Celebration Becomes a Beautiful Memory.",
-  phone: "+91 00000 00000", // placeholder
-  whatsapp: "910000000000", // placeholder, digits only with country code
-  email: "hello@vrindavanvatika.example", // placeholder
+  phone: "+91 91645 12738",
+  whatsapp: "919164512738",
+  email: "vrindavanvatika101@gmail.com",
   address: "Gaya Road, Islampur, Nalanda, Bihar", // from the venue's own menu card
-  mapsUrl: "https://maps.app.goo.gl/xCUxfeqawTHsuC6F7",
+  mapsUrl: "https://share.google/j7YNA044kGTco9q9g",
   mapsEmbed: "https://maps.google.com/maps?q=25.1400194,85.1978283&z=16&output=embed",
   social: { instagram: "#", facebook: "#", youtube: "#" },
 };
